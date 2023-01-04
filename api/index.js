@@ -4,7 +4,10 @@ const app = express();
 app.use(express.json());
 
 const custodyController = (req, res) => {
-  console.log(req.body);
+  if (req.body?.challenge) {
+    return res.send(req.body.challenge);
+  }
+
   return res.sendStatus(200);
 };
 app.post("/api/custody", custodyController);
