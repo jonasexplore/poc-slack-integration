@@ -1,11 +1,12 @@
 const express = require("express");
 
 const app = express();
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const custodyController = (req, res) => {
   try {
-    const resquest = JSON.parse(req.body);
+    const resquest = req.body;
     console.log("INFO >> BODY >> ", resquest);
 
     if (resquest?.challenge) {
