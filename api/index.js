@@ -5,8 +5,8 @@ app.use(express.json());
 
 const custodyController = (req, res) => {
   try {
+    console.log(req.body);
     if (req.body?.challenge) {
-      console.log(req.body);
       return res.send(req.body.challenge);
     }
 
