@@ -18,23 +18,21 @@ const custodyController = async (req, res) => {
     if (request?.payload) {
       const payload = request.payload;
 
-      if (payload.type === "message_action") {
-        console.log(
-          "User: ",
-          payload?.user?.name,
-          "Request",
-          payload?.message?.text,
-          "Callback ID: ",
-          payload?.callback_id
-        );
+      console.log(
+        "User: ",
+        payload?.user?.name,
+        "Request",
+        payload?.message?.text,
+        "Callback ID: ",
+        payload?.callback_id
+      );
 
-        const messageResponse =
-          "Recebemos sua solicitação! Iremos marcar que a transferência foi realizada com sucesso, muito obrigado.";
+      const messageResponse =
+        "Recebemos sua solicitação! Iremos marcar que a transferência foi realizada com sucesso, muito obrigado.";
 
-        await axios.post(payload.response_url, {
-          text: messageResponse,
-        });
-      }
+      await axios.post(payload.response_url, {
+        text: messageResponse,
+      });
     }
 
     return res.status(200).send();
