@@ -1,5 +1,5 @@
 const express = require("express");
-const axios = require("axios").default;
+const { postMessage, reactionsAdd, REACTIONS } = require("./slack");
 
 const app = express();
 app.use(express.json());
@@ -16,22 +16,29 @@ const custodyController = async (req, res) => {
     if (request?.payload) {
       const payload = JSON.parse(request.payload);
 
-      console.log("PAYLOAD >> ", payload);
+      const channel = payload?.channel?.id;
+      const timestamp = payload?.message?.ts;
 
-      console.table([
-        ["user", payload?.user?.name],
-        ["response_url", payload?.response_url],
-        ["Callback ID", payload?.callback_id],
-      ]);
+      console.log("PAYLOAD >> ", payload);
 
       const messageResponse =
         "Recebemos sua solicitação! Iremos marcar que a transferência foi realizada com sucesso, muito obrigado.";
 
       try {
-        await axios.post(payload.response_url, {
-          text: messageResponse,
-          response_type: "ephemeral",
-        });
+        const promisses = [
+          postMessage({
+            channel,
+            timestamp,
+            text: messageResponse,
+          }),
+          reactionsAdd({
+            channel,
+            timestamp,
+            reaction: REACTIONS.white_check_mark,
+          }),
+        ];
+
+        await Promise.all(promisses);
       } catch (error) {
         return res.status(200).send();
       }
