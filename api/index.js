@@ -1,4 +1,3 @@
-const { request } = require("express");
 const express = require("express");
 const axios = require("axios").default;
 
@@ -13,6 +12,8 @@ const custodyController = async (req, res) => {
     if (request?.challenge) {
       return res.send(request.challenge);
     }
+
+    console.log(request);
 
     if (request?.payload) {
       const payload = JSON.parse(JSON.stringify(request.payload));
