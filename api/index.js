@@ -11,7 +11,7 @@ const custodyController = (req, res) => {
       return res.send(req.body.challenge);
     }
 
-    return res.sendStatus(200);
+    return res.status(200);
   } catch (error) {
     console.log("ERROR >> ", error);
     return res.json({ message: error?.message }).status(500);
