@@ -8,31 +8,31 @@ app.use(express.urlencoded({ extended: true }));
 
 const custodyController = async (req, res) => {
   try {
-    const resquest = req.body;
-    // console.log("INFO >> BODY >> ", resquest);
+    const request = req.body;
 
-    if (resquest?.challenge) {
-      return res.send(resquest.challenge);
+    if (request?.challenge) {
+      return res.send(request.challenge);
     }
 
     if (request?.payload) {
       const payload = request.payload;
 
-      console.log(
-        "User: ",
-        payload?.user?.name,
-        "Request",
-        payload?.message?.text,
-        "Callback ID: ",
-        payload?.callback_id
-      );
+      console.table([
+        ["user", payload?.user?.name],
+        ["request", payload?.message?.text],
+        ["Callback ID", payload?.callback_id],
+      ]);
 
       const messageResponse =
         "Recebemos sua solicitação! Iremos marcar que a transferência foi realizada com sucesso, muito obrigado.";
 
-      await axios.post(payload.response_url, {
-        text: messageResponse,
-      });
+      try {
+        await axios.post(payload.response_url, {
+          text: messageResponse,
+        });
+      } catch (error) {
+        return res.status(200).send();
+      }
     }
 
     return res.status(200).send();
