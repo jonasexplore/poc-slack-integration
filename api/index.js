@@ -13,14 +13,14 @@ const custodyController = async (req, res) => {
       return res.send(request.challenge);
     }
 
-    console.log(request);
+    console.log(request.payload);
 
     if (request?.payload) {
-      const payload = JSON.parse(JSON.stringify(request.payload));
+      const payload = JSON.parse(request.payload);
 
       console.table([
         ["user", payload?.user?.name],
-        ["request", payload?.message?.text],
+        ["response_url", payload?.response_url],
         ["Callback ID", payload?.callback_id],
       ]);
 
