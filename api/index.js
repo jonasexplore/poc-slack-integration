@@ -16,6 +16,8 @@ const custodyController = async (req, res) => {
     if (request?.payload) {
       const payload = JSON.parse(request.payload);
 
+      console.log("PAYLOAD >> ", payload);
+
       console.table([
         ["user", payload?.user?.name],
         ["response_url", payload?.response_url],
