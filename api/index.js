@@ -1,13 +1,19 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
 
 const custodyController = (req, res) => {
   try {
+    if (!fs.existsSync(path.join(__dirname, "../tmp"))) {
+      fs.mkdirSync(path.join(__dirname, "../tmp"));
+    }
+
+    const filePath = path.join(__dirname, "../tmp", "custody.txt");
     if (req.body?.challenge) {
-      fs.writeFile("custody.txt", JSON.stringify(req.body), function (err) {
+      fs.writeFile(filePath, JSON.stringify(req.body), function (err) {
         if (err) {
           console.log(err);
           throw err;
