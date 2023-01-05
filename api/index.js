@@ -40,6 +40,7 @@ const custodyController = async (req, res) => {
 
         await Promise.all(promisses);
       } catch (error) {
+        console.log("ERROR >> ", error);
         return res.status(200).send();
       }
     }
