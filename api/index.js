@@ -11,9 +11,7 @@ const custodyController = (req, res) => {
       return res.send(req.body.challenge);
     }
 
-    return res.json({
-      text: "Recebemos a solicição de marcação de conclusão da transferência de custódia, Obrigado.",
-    });
+    return res.sendStatus(200);
   } catch (error) {
     console.log("ERROR >> ", error);
     return res.json({ message: error?.message }).status(500);
