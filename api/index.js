@@ -13,8 +13,6 @@ const custodyController = async (req, res) => {
       return res.send(request.challenge);
     }
 
-    console.log(request.payload);
-
     if (request?.payload) {
       const payload = JSON.parse(request.payload);
 
@@ -30,7 +28,7 @@ const custodyController = async (req, res) => {
       try {
         await axios.post(payload.response_url, {
           text: messageResponse,
-          replace_original: true,
+          response_type: "ephemeral",
         });
       } catch (error) {
         return res.status(200).send();
