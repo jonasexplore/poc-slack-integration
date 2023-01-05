@@ -30,6 +30,7 @@ const custodyController = async (req, res) => {
       try {
         await axios.post(payload.response_url, {
           text: messageResponse,
+          response_type: "ephemeral",
         });
       } catch (error) {
         return res.status(200).send();
